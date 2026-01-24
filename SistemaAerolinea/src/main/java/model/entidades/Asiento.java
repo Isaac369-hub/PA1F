@@ -2,18 +2,16 @@ package model.entidades;
 
 public class Asiento {
     private String numero;
-    private String clase; // "ECONOMICA", "BUSINESS", "PRIMERA"
+    private String clase;
     private double precio;
     private boolean disponible;
-    private Vuelo vuelo;
     
     public Asiento() {}
     
-    public Asiento(String numero, String clase, double precio, Vuelo vuelo) {
+    public Asiento(String numero, String clase, double precio) {
         this.numero = numero;
         this.clase = clase;
         this.precio = precio;
-        this.vuelo = vuelo;
         this.disponible = true;
     }
     
@@ -29,9 +27,6 @@ public class Asiento {
     
     public boolean isDisponible() { return disponible; }
     public void setDisponible(boolean disponible) { this.disponible = disponible; }
-    
-    public Vuelo getVuelo() { return vuelo; }
-    public void setVuelo(Vuelo vuelo) { this.vuelo = vuelo; }
     
     @Override
     public String toString() {

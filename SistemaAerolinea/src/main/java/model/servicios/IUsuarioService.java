@@ -1,13 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package model.servicios;
 
-/**
- *
- * @author bryan
- */
+import model.entidades.Usuario;
+import model.entidades.Pasajero;
+
 public interface IUsuarioService {
-    
+    Usuario autenticar(String email, String password);
+    boolean registrarUsuario(Usuario usuario);
+    boolean actualizarUsuario(Usuario usuario);
+    Usuario obtenerUsuarioPorId(String usuarioId);
+    Pasajero convertirAPasajero(Usuario usuario);
+    boolean validarEmailExistente(String email);
 }

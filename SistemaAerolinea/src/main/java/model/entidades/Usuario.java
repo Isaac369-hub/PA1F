@@ -1,21 +1,14 @@
-// En: src/model/entidades/Usuario.java
 package model.entidades;
 
-/**
- * Clase base para todos los usuarios del sistema
- * Demuestra principio de Liskov Substitution (SOLID)
- */
 public abstract class Usuario {
     private String id;
     private String nombre;
     private String email;
     private String password;
     private String telefono;
-    private String rol; // "ADMIN", "AGENTE", "PASAJERO"
+    private String rol;
     
-    public Usuario() {
-        // Constructor por defecto
-    }
+    public Usuario() {}
     
     public Usuario(String id, String nombre, String email, String password, String rol) {
         this.id = id;
@@ -25,10 +18,9 @@ public abstract class Usuario {
         this.rol = rol;
     }
     
-    // Método abstracto - principio de Open/Closed
     public abstract void mostrarInformacion();
     
-    // Getters y Setters (genera estos con tu IDE)
+    // Getters y Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     
@@ -49,11 +41,6 @@ public abstract class Usuario {
     
     @Override
     public String toString() {
-        return "Usuario{" +
-                "id='" + id + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", rol='" + rol + '\'' +
-                '}';
+        return nombre + " (" + email + ")";
     }
 }

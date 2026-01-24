@@ -5,27 +5,26 @@ import java.util.Date;
 public class Vuelo {
     private String id;
     private String numeroVuelo;
-    private Aeropuerto origen;
-    private Aeropuerto destino;
+    private String origenIATA;
+    private String destinoIATA;
     private Date fechaHoraSalida;
     private Date fechaHoraLlegada;
-    private Avion avion;
     private double precioBase;
     private int asientosDisponibles;
-    private String estado; // "PROGRAMADO", "EN_VUELO", "CANCELADO", "REALIZADO"
+    private String estado;
     
     public Vuelo() {}
     
-    public Vuelo(String id, String numeroVuelo, Aeropuerto origen, Aeropuerto destino,
+    public Vuelo(String id, String numeroVuelo, String origenIATA, String destinoIATA,
                 Date fechaHoraSalida, Date fechaHoraLlegada, double precioBase) {
         this.id = id;
         this.numeroVuelo = numeroVuelo;
-        this.origen = origen;
-        this.destino = destino;
+        this.origenIATA = origenIATA;
+        this.destinoIATA = destinoIATA;
         this.fechaHoraSalida = fechaHoraSalida;
         this.fechaHoraLlegada = fechaHoraLlegada;
         this.precioBase = precioBase;
-        this.asientosDisponibles = 150; // Valor por defecto
+        this.asientosDisponibles = 150;
         this.estado = "PROGRAMADO";
     }
     
@@ -36,20 +35,17 @@ public class Vuelo {
     public String getNumeroVuelo() { return numeroVuelo; }
     public void setNumeroVuelo(String numeroVuelo) { this.numeroVuelo = numeroVuelo; }
     
-    public Aeropuerto getOrigen() { return origen; }
-    public void setOrigen(Aeropuerto origen) { this.origen = origen; }
+    public String getOrigenIATA() { return origenIATA; }
+    public void setOrigenIATA(String origenIATA) { this.origenIATA = origenIATA; }
     
-    public Aeropuerto getDestino() { return destino; }
-    public void setDestino(Aeropuerto destino) { this.destino = destino; }
+    public String getDestinoIATA() { return destinoIATA; }
+    public void setDestinoIATA(String destinoIATA) { this.destinoIATA = destinoIATA; }
     
     public Date getFechaHoraSalida() { return fechaHoraSalida; }
     public void setFechaHoraSalida(Date fechaHoraSalida) { this.fechaHoraSalida = fechaHoraSalida; }
     
     public Date getFechaHoraLlegada() { return fechaHoraLlegada; }
     public void setFechaHoraLlegada(Date fechaHoraLlegada) { this.fechaHoraLlegada = fechaHoraLlegada; }
-    
-    public Avion getAvion() { return avion; }
-    public void setAvion(Avion avion) { this.avion = avion; }
     
     public double getPrecioBase() { return precioBase; }
     public void setPrecioBase(double precioBase) { this.precioBase = precioBase; }
@@ -60,17 +56,8 @@ public class Vuelo {
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
     
-    public double calcularDuracionHoras() {
-        if (fechaHoraSalida != null && fechaHoraLlegada != null) {
-            long diffMs = fechaHoraLlegada.getTime() - fechaHoraSalida.getTime();
-            return diffMs / (1000.0 * 60 * 60); // Convertir a horas
-        }
-        return 0;
-    }
-    
     @Override
     public String toString() {
-        return numeroVuelo + " | " + origen.getCodigoIATA() + " → " + destino.getCodigoIATA() + 
-               " | " + fechaHoraSalida;
+        return numeroVuelo + ": " + origenIATA + " → " + destinoIATA + " - $" + precioBase;
     }
 }

@@ -1,16 +1,10 @@
-// En: src/model/entidades/Aeropuerto.java
 package model.entidades;
 
-/**
- * Representa un aeropuerto en el sistema
- * Demuestra Single Responsibility Principle
- */
 public class Aeropuerto {
     private String codigoIATA;
     private String nombre;
     private String ciudad;
     private String pais;
-    private int terminales;
     
     public Aeropuerto() {}
     
@@ -19,7 +13,6 @@ public class Aeropuerto {
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.pais = pais;
-        this.terminales = 1;
     }
     
     // Getters y Setters
@@ -35,11 +28,8 @@ public class Aeropuerto {
     public String getPais() { return pais; }
     public void setPais(String pais) { this.pais = pais; }
     
-    public int getTerminales() { return terminales; }
-    public void setTerminales(int terminales) { this.terminales = terminales; }
-    
     @Override
     public String toString() {
-        return codigoIATA + " - " + nombre + " (" + ciudad + ", " + pais + ")";
+        return codigoIATA + " - " + nombre + " (" + ciudad + ")";
     }
 }
