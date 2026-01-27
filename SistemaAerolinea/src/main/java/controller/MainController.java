@@ -1,103 +1,111 @@
 package controller;
 
 import javax.swing.JOptionPane;
+
 import model.entidades.Usuario;
 import model.servicios.IUsuarioService;
+import model.servicios.IVueloService;
 import model.servicios.UsuarioServiceImpl;
+import model.servicios.VueloServiceImpl;
+
 import view.MainFrame;
 import view.LoginPanel;
 import view.DashboardPanel;
+import view.BusquedaVueloPanel;
 
 public class MainController {
+
     private MainFrame mainFrame;
     private LoginPanel loginPanel;
     private DashboardPanel dashboardPanel;
+
     private VueloController vueloController;
     private ReservaController reservaController;
     private UsuarioController usuarioController;
+
     private IUsuarioService usuarioService;
     private Usuario usuarioActual;
-    
+
     public MainController() {
-        // Inicializar servicios
-        this.usuarioService = new UsuarioServiceImpl();
-        
-        // Inicializar controladores específicos
-        this.vueloController = new VueloController();
-        this.reservaController = new ReservaController();
-        this.usuarioController = new UsuarioController(usuarioService);
-        
-        // Crear interfaz gráfica
-        this.mainFrame = new MainFrame();
-        this.loginPanel = new LoginPanel(this);
-        
-        // Configurar frame principal
+
+        // Servicios
+        usuarioService = new UsuarioServiceImpl();
+        IVueloService vueloService = new VueloServiceImpl();
+
+        // Controladores
+        vueloController = new VueloController(vueloService);
+        reservaController = new ReservaController();
+        usuarioController = new UsuarioController(usuarioService);
+
+        // frame
+        mainFrame = new MainFrame();
+        loginPanel = new LoginPanel(this);
+
         mainFrame.setContentPane(loginPanel);
+        mainFrame.actualizarTitulo("Sistema de Aerolínea - Login");
         mainFrame.setVisible(true);
     }
-    
+
+    // inicio de secion 
     public boolean login(String username, String password) {
         usuarioActual = usuarioService.autenticar(username, password);
-        
+
         if (usuarioActual != null) {
-            // Crear dashboard después del login exitoso
-            this.dashboardPanel = new DashboardPanel(this);
-            dashboardPanel.setUsuario(usuarioActual);
-            
-            mainFrame.setContentPane(dashboardPanel);
-            mainFrame.actualizarTitulo("Bienvenido, " + usuarioActual.getNombre());
+            mostrarDashboard();
             return true;
         }
         return false;
     }
-    
+
+    // el logout
     public void logout() {
         usuarioActual = null;
         mainFrame.setContentPane(loginPanel);
         loginPanel.limpiarCampos();
         mainFrame.actualizarTitulo("Sistema de Aerolínea - Login");
     }
-    
-    public void mostrarBusquedaVuelos() {
-    if (usuarioActual == null) {
-        JOptionPane.showMessageDialog(mainFrame,
-            "Debe iniciar sesión primero");
-        return;
+
+    // dashboard principal
+    public void mostrarDashboard() {
+        dashboardPanel = new DashboardPanel(this);
+        dashboardPanel.setUsuario(usuarioActual);
+
+        mainFrame.setContentPane(dashboardPanel);
+        mainFrame.actualizarTitulo(
+            "Bienvenido, " + usuarioActual.getNombre()
+        );
     }
 
-    vueloController.mostrarPanelBusqueda(mainFrame, usuarioActual);
-}
+    // la busqueda de vuelos
+    public void mostrarBusquedaVuelos() {
 
-    
+        BusquedaVueloPanel panel = new BusquedaVueloPanel(
+            vueloController,
+            usuarioActual,
+            this,
+            reservaController
+        );
+
+        mainFrame.setContentPane(panel);
+        mainFrame.actualizarTitulo("Búsqueda de Vuelos");
+    }
+
+    // reservas
     public void mostrarReservas() {
         reservaController.mostrarReservasUsuario(usuarioActual, mainFrame);
     }
-    
+
+    // perfil
     public void mostrarPerfil() {
         usuarioController.mostrarPerfil(usuarioActual, mainFrame);
     }
-    
-    // Getters para los controladores específicos
-    public VueloController getVueloController() {
-        return vueloController;
-    }
-    
-    public ReservaController getReservaController() {
-        return reservaController;
-    }
-    
-    public UsuarioController getUsuarioController() {
-        return usuarioController;
-    }
-    
+
+    // getters
     public Usuario getUsuarioActual() {
         return usuarioActual;
     }
-    
+
     public static void main(String[] args) {
-        // Usar SwingUtilities para garantizar thread safety
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            new MainController();
-        });
+        javax.swing.SwingUtilities.invokeLater(MainController::new);
     }
 }
