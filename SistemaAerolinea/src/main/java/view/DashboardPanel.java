@@ -27,7 +27,7 @@ public class DashboardPanel extends JPanel {
         panelBienvenida.setBackground(new Color(0, 102, 204));
         panelBienvenida.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        lblBienvenida = new JLabel("Bienvenido al Sistema de Aerolínea", SwingConstants.CENTER);
+        lblBienvenida = new JLabel("Bienvenido al Sistema-AeroSystem FIS", SwingConstants.CENTER);
         lblBienvenida.setFont(new Font("Arial", Font.BOLD, 20));
         lblBienvenida.setForeground(Color.WHITE);
         panelBienvenida.add(lblBienvenida, BorderLayout.CENTER);

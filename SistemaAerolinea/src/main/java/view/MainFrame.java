@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
     
     private void initComponents() {
         // Configurar propiedades de la ventana
-        setTitle("Sistema de Aerolínea - Login");
+        setTitle("Sistema AeroSystem - Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 600);
         setLocationRelativeTo(null);
@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
         contentPanel.setBackground(Color.WHITE);
         
         // Crear barra de título
-        lblTitulo = new JLabel("Sistema de Aerolínea", SwingConstants.CENTER);
+        lblTitulo = new JLabel("Sistema-AeroSystem FIS", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         lblTitulo.setForeground(new Color(0, 76, 153));
         
