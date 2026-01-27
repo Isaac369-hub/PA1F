@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import model.entidades.Reserva;
 import model.entidades.Usuario;
 import model.servicios.IReservaService;
@@ -8,6 +9,7 @@ import view.MainFrame;
 import view.ReservaPanel;
 
 import java.util.List;
+import model.entidades.Vuelo;
 
 public class ReservaController {
     private IReservaService reservaService;
@@ -21,7 +23,25 @@ public class ReservaController {
             return reservaService.obtenerReservasPorUsuario(usuario.getId());
         } catch (Exception e) {
             System.err.println("Error obteniendo reservas: " + e.getMessage());
-            return List.of();
+            return new ArrayList<>();
+
+        }
+    }
+    
+    public Reserva crearReserva(Vuelo vuelo, Usuario usuario) {
+        try {
+            List<Usuario> pasajeros = new ArrayList<>();
+            pasajeros.add(usuario); // 1 pasajero
+
+            return reservaService.crearReserva(
+                vuelo,
+                usuario,
+                pasajeros,
+                new ArrayList<>()
+            );
+        } catch (Exception e) {
+            System.err.println("Error creando reserva: " + e.getMessage());
+            return null;
         }
     }
     

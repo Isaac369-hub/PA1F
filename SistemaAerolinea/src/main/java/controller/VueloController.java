@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import model.entidades.Vuelo;
 import model.entidades.Aeropuerto;
 import model.servicios.IVueloService;
@@ -9,6 +10,7 @@ import view.BusquedaVueloPanel;
 
 import java.util.Date;
 import java.util.List;
+import model.entidades.Usuario;
 
 public class VueloController {
     private IVueloService vueloService;
@@ -25,9 +27,18 @@ public class VueloController {
             return List.of();
         }
     }
+    public List<Vuelo> buscarVuelos(String origen, String destino) {
+        try {
+            return vueloService.buscarVuelosDisponibles(origen, destino, null, 1);
+        } catch (Exception e) {
+            System.err.println("Error buscando vuelos: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
     
-    public void mostrarPanelBusqueda(MainFrame mainFrame) {
-        BusquedaVueloPanel panel = new BusquedaVueloPanel(this);
+    public void mostrarPanelBusqueda(MainFrame mainFrame, Usuario usuario) {
+        BusquedaVueloPanel panel = new BusquedaVueloPanel(this, usuario);
         mainFrame.setContentPane(panel);
         mainFrame.actualizarTitulo("Búsqueda de Vuelos");
     }

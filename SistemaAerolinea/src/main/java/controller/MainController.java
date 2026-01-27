@@ -1,5 +1,6 @@
 package controller;
 
+import javax.swing.JOptionPane;
 import model.entidades.Usuario;
 import model.servicios.IUsuarioService;
 import model.servicios.UsuarioServiceImpl;
@@ -58,8 +59,15 @@ public class MainController {
     }
     
     public void mostrarBusquedaVuelos() {
-        vueloController.mostrarPanelBusqueda(mainFrame);
+    if (usuarioActual == null) {
+        JOptionPane.showMessageDialog(mainFrame,
+            "Debe iniciar sesión primero");
+        return;
     }
+
+    vueloController.mostrarPanelBusqueda(mainFrame, usuarioActual);
+}
+
     
     public void mostrarReservas() {
         reservaController.mostrarReservasUsuario(usuarioActual, mainFrame);
