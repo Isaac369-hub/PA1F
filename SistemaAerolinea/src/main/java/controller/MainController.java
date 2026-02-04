@@ -92,7 +92,7 @@ public class MainController {
 
     // reservas
     public void mostrarReservas() {
-        reservaController.mostrarReservasUsuario(usuarioActual, mainFrame);
+        reservaController.mostrarReservasUsuario(usuarioActual, this, mainFrame);
     }
 
     // perfil

@@ -1,0 +1,9 @@
+======== TICKET DE VUELO ========
+Código de reserva: RES2024
+Pasajero: Juan Pérez
+Vuelo: MEX -> CUN
+Clase: ECONOMICA
+Precio total: $120.0
+Estado: CONFIRMADA
+Fecha: 04/02/2026
+================================

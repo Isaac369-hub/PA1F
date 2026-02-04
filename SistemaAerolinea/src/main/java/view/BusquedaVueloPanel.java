@@ -61,8 +61,13 @@ public class BusquedaVueloPanel extends JPanel {
         // panel inferior
         JPanel panelFiltros = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        JComboBox<String> cmbOrigen = new JComboBox<>(new String[]{"MEX", "JFK", "LAX"});
-        JComboBox<String> cmbDestino = new JComboBox<>(new String[]{"MEX", "JFK", "LAX"});
+        String[] aeropuertos = {"MEX", "JFK", "LAX", "ORD", "ATL","BOG", "LIM",
+            "CUN", "MTY"
+        };
+
+        JComboBox<String> cmbOrigen = new JComboBox<>(aeropuertos);
+        JComboBox<String> cmbDestino = new JComboBox<>(aeropuertos);
+
 
         JButton btnBuscar = new JButton("Buscar Vuelos");
         btnBuscar.setBackground(new Color(40, 167, 69)); 

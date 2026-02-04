@@ -45,10 +45,14 @@ public class ReservaController {
         }
     }
     
-    public void mostrarReservasUsuario(Usuario usuario, MainFrame mainFrame) {
-        List<Reserva> reservas = obtenerReservasUsuario(usuario);
-        ReservaPanel panel = new ReservaPanel(this, reservas);
-        mainFrame.setContentPane(panel);
-        mainFrame.actualizarTitulo("Mis Reservas");
-    }
+    public void mostrarReservasUsuario(Usuario usuario,MainController mainController,
+        MainFrame mainFrame) {
+    List<Reserva> reservas = obtenerReservasUsuario(usuario);
+
+    ReservaPanel panel = new ReservaPanel(this,reservas,mainController);
+
+    mainFrame.setContentPane(panel);
+    mainFrame.actualizarTitulo("Mis Reservas");
+}
+
 }

@@ -34,13 +34,7 @@ public class MainFrame extends JFrame {
         tituloPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         tituloPanel.add(lblTitulo, BorderLayout.CENTER);
         
-        // Botón de salir
-        JButton btnSalir = new JButton("Salir");
-        btnSalir.setFont(new Font("Arial", Font.PLAIN, 12));
-        btnSalir.setBackground(new Color(220, 53, 69));
-        btnSalir.setForeground(Color.WHITE);
-        btnSalir.addActionListener(e -> System.exit(0));
-        tituloPanel.add(btnSalir, BorderLayout.EAST);
+        
         
         // Añadir componentes al frame
         add(tituloPanel, BorderLayout.NORTH);

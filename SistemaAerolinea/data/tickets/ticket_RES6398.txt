@@ -1,0 +1,9 @@
+======== TICKET DE VUELO ========
+Código de reserva: RES6398
+Pasajero: Juan Pérez
+Vuelo: MEX -> ATL
+Clase: ECONOMICA
+Precio total: $240.0
+Estado: CONFIRMADA
+Fecha: 04/02/2026
+================================

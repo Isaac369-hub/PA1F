@@ -1,0 +1,9 @@
+======== TICKET DE VUELO ========
+Código de reserva: RES7358
+Pasajero: Juan Pérez
+Vuelo: MEX -> JFK
+Clase: ECONOMICA
+Precio total: $250.0
+Estado: CONFIRMADA
+Fecha: 04/02/2026
+================================

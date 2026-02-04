@@ -1,0 +1,9 @@
+======== TICKET DE VUELO ========
+Código de reserva: RES5121
+Pasajero: Juan Pérez
+Vuelo: MEX -> LIM
+Clase: ECONOMICA
+Precio total: $320.0
+Estado: CONFIRMADA
+Fecha: 04/02/2026
+================================

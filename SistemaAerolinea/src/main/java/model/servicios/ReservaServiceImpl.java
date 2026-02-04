@@ -6,6 +6,11 @@ import model.entidades.Usuario;
 import model.entidades.Pasajero;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class ReservaServiceImpl implements IReservaService {
     private List<Reserva> reservas;
@@ -40,8 +45,11 @@ public class ReservaServiceImpl implements IReservaService {
         
         // Guardar reserva
         reservas.add(reserva);
-        
+        guardarReservaEnArchivo(reserva);
+        generarTicketTXT(reserva);
+
         return reserva;
+        
     }
     
     @Override
@@ -117,4 +125,74 @@ public class ReservaServiceImpl implements IReservaService {
     public List<Reserva> getReservas() {
         return new ArrayList<>(reservas);
     }
+    
+    // manejo de archivos txt
+    private static final String DATA_PATH = "data";
+    private static final String RESERVAS_FILE = DATA_PATH + "/reservas.txt";
+    private static final String TICKETS_PATH = DATA_PATH + "/tickets";
+
+    private void crearDirectoriosSiNoExisten() {
+        new File(DATA_PATH).mkdirs();
+        new File(TICKETS_PATH).mkdirs();
+    }
+
+    private void guardarReservaEnArchivo(Reserva reserva) {
+        crearDirectoriosSiNoExisten();
+
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(RESERVAS_FILE, true))) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        String linea =
+                reserva.getCodigoReserva() + ";" +
+                reserva.getUsuario().getNombre() + ";" +
+                reserva.getVuelo().getOrigenIATA() + ";" +
+                reserva.getVuelo().getDestinoIATA() + ";" +
+                reserva.getPrecioTotal() + ";" +
+                reserva.getEstado() + ";" +
+                sdf.format(reserva.getFechaReserva());
+
+        bw.write(linea);
+        bw.newLine();
+
+    } catch (IOException e) {
+        System.err.println("Error guardando reserva en archivo: " + e.getMessage());
+    }
+}
+
+private void generarTicketTXT(Reserva reserva) {
+    crearDirectoriosSiNoExisten();
+
+    String nombreArchivo =
+            TICKETS_PATH + "/ticket_" + reserva.getCodigoReserva() + ".txt";
+
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(nombreArchivo))) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        bw.write("======== TICKET DE VUELO ========");
+        bw.newLine();
+        bw.write("Código de reserva: " + reserva.getCodigoReserva());
+        bw.newLine();
+        bw.write("Pasajero: " + reserva.getUsuario().getNombre());
+        bw.newLine();
+        bw.write("Vuelo: " +
+                reserva.getVuelo().getOrigenIATA() + " -> " +
+                reserva.getVuelo().getDestinoIATA());
+        bw.newLine();
+        bw.write("Clase: " + reserva.getClase());
+        bw.newLine();
+        bw.write("Precio total: $" + reserva.getPrecioTotal());
+        bw.newLine();
+        bw.write("Estado: " + reserva.getEstado());
+        bw.newLine();
+        bw.write("Fecha: " + sdf.format(reserva.getFechaReserva()));
+        bw.newLine();
+        bw.write("================================");
+
+    } catch (IOException e) {
+        System.err.println("Error generando ticket: " + e.getMessage());
+    }
+}
+
 }
