@@ -1,0 +1,125 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam style strictuml
+
+package "model.entidades" {
+
+    class Aeropuerto {
+        - String codigoIATA
+        - String nombre
+        - String ciudad
+        - String pais
+        + Aeropuerto()
+        + Aeropuerto(String codigoIATA, String nombre, String ciudad, String pais)
+        + getCodigoIATA() : String
+        + getNombre() : String
+        + getCiudad() : String
+        + getPais() : String
+        + toString() : String
+    }
+
+    class Asiento {
+        - String numero
+        - String clase
+        - double precio
+        - boolean disponible
+        + Asiento()
+        + Asiento(String numero, String clase, double precio)
+        + getNumero() : String
+        + getClase() : String
+        + getPrecio() : double
+        + isDisponible() : boolean
+        + setDisponible(boolean disponible) : void
+        + toString() : String
+    }
+
+    class Avion {
+        - String id
+        - String modelo
+        - int capacidadTotal
+        - String estado
+        + Avion()
+        + Avion(String id, String modelo, int capacidadTotal)
+        + getId() : String
+        + getModelo() : String
+        + getCapacidadTotal() : int
+        + getEstado() : String
+        + toString() : String
+    }
+
+    abstract class Usuario {
+        - String id
+        - String nombre
+        - String email
+        - String password
+        - String telefono
+        - String rol
+        + Usuario()
+        + Usuario(String id, String nombre, String email, String password, String rol)
+        + {abstract} mostrarInformacion() : void
+        + getId() : String
+        + getNombre() : String
+        + getEmail() : String
+        + getRol() : String
+        + toString() : String
+    }
+
+    class Pasajero {
+        - String pasaporte
+        - Date fechaNacimiento
+        - String nacionalidad
+        + Pasajero()
+        + Pasajero(String id, String nombre, String email, String password, String pasaporte, Date fechaNacimiento, String nacionalidad)
+        + mostrarInformacion() : void
+        + getPasaporte() : String
+        + getFechaNacimiento() : Date
+        + getNacionalidad() : String
+    }
+
+    class Vuelo {
+        - String id
+        - String numeroVuelo
+        - String origenIATA
+        - String destinoIATA
+        - Date fechaHoraSalida
+        - Date fechaHoraLlegada
+        - double precioBase
+        - int asientosDisponibles
+        - String estado
+        + Vuelo()
+        + Vuelo(String id, String numeroVuelo, String origenIATA, String destinoIATA, Date fechaHoraSalida, Date fechaHoraLlegada, double precioBase)
+        + getNumeroVuelo() : String
+        + getOrigenIATA() : String
+        + getDestinoIATA() : String
+        + getPrecioBase() : double
+        + toString() : String
+    }
+
+    class Reserva {
+        - String id
+        - Vuelo vuelo
+        - Usuario usuario
+        - List~Pasajero~ pasajeros
+        - Date fechaReserva
+        - double precioTotal
+        - String estado
+        - String clase
+        - String codigoReserva
+        + Reserva()
+        + Reserva(String id, Vuelo vuelo, Usuario usuario, List~Pasajero~ pasajeros, double precioTotal, String clase)
+        + getId() : String
+        + getVuelo() : Vuelo
+        + getUsuario() : Usuario
+        + getPasajeros() : List~Pasajero~
+        + getCantidadPasajeros() : int
+        + toString() : String
+    }
+}
+
+
+Usuario <|-- Pasajero : extiende
+
+Reserva --> "1" Vuelo : contiene
+Reserva --> "1" Usuario : realizada por
+Reserva o--> "*" Pasajero : lista de
+@enduml
