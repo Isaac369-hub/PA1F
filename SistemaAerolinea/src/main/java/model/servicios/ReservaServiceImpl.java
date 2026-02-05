@@ -1,7 +1,6 @@
 package model.servicios;
 
 import model.entidades.Reserva;
-import model.entidades.Vuelo;
 import model.entidades.Usuario;
 import model.entidades.Pasajero;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import model.entidades.Vuelo;
 
 public class ReservaServiceImpl implements IReservaService {
     private List<Reserva> reservas;
@@ -34,12 +34,19 @@ public class ReservaServiceImpl implements IReservaService {
         
         // Calcular precio (precio base * cantidad de pasajeros)
         double precioTotal = vuelo.getPrecioBase() * pasajeros.size();
-        
+        // Generar asientos numerados automáticamente
+        List<String> asientosGenerados = new ArrayList<>();
+
+        int inicio = vuelo.getAsientosDisponibles() - pasajeros.size() + 1;
+
+        for (int i = 0; i < pasajeros.size(); i++) {
+            asientosGenerados.add("A" + (inicio + i));
+        }
+
         // Crear reserva
         String reservaId = "RES" + String.format("%03d", reservas.size() + 1);
-        Reserva reserva = new Reserva(reservaId, vuelo, usuario, pasajerosList, 
-                                     precioTotal, "ECONOMICA");
-        
+        Reserva reserva = new Reserva(reservaId, vuelo, usuario, pasajerosList,precioTotal,
+                "ECONOMICA", pasajeros.size(), asientosGenerados);
         // Actualizar disponibilidad de asientos
         vuelo.setAsientosDisponibles(vuelo.getAsientosDisponibles() - pasajeros.size());
         
@@ -62,8 +69,7 @@ public class ReservaServiceImpl implements IReservaService {
                 // Liberar asientos
                 Vuelo vuelo = reserva.getVuelo();
                 vuelo.setAsientosDisponibles(
-                    vuelo.getAsientosDisponibles() + reserva.getCantidadPasajeros()
-                );
+         vuelo.getAsientosDisponibles() + reserva.getCantidadAsientos());
                 
                 return true;
             }
@@ -170,17 +176,19 @@ private void generarTicketTXT(Reserva reserva) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        bw.write("======== TICKET DE VUELO ========");
+        bw.write("======== TICKET DE VUELO FIS ========");
         bw.newLine();
         bw.write("Código de reserva: " + reserva.getCodigoReserva());
         bw.newLine();
         bw.write("Pasajero: " + reserva.getUsuario().getNombre());
         bw.newLine();
-        bw.write("Vuelo: " +
-                reserva.getVuelo().getOrigenIATA() + " -> " +
-                reserva.getVuelo().getDestinoIATA());
+        bw.write("Vuelo: " +reserva.getVuelo().getOrigenIATA() + " -> " +reserva.getVuelo().getDestinoIATA());
+        bw.newLine();
+        bw.write("Asientos reservados: " + reserva.getCantidadAsientos());
         bw.newLine();
         bw.write("Clase: " + reserva.getClase());
+        bw.newLine();
+        bw.write("Asientos: " + reserva.getAsientosTexto());
         bw.newLine();
         bw.write("Precio total: $" + reserva.getPrecioTotal());
         bw.newLine();

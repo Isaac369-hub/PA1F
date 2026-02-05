@@ -8,13 +8,14 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import controller.MainController;
-
+import java.awt.Desktop;
+import java.io.File;
 
 public class ReservaPanel extends JPanel {
     private ReservaController controller;
     private List<Reserva> reservas;
     private MainController mainController;
-
+    private JTable tablaReservas;
     
     // CONSTRUCTOR CORRECTO que pide el MainController
         public ReservaPanel(ReservaController controller,List<Reserva> reservas,
@@ -42,9 +43,17 @@ public class ReservaPanel extends JPanel {
         btnRegresar.setFocusPainted(false);
 
         btnRegresar.addActionListener(e -> mainController.mostrarDashboard());
+        JButton btnVerTicket = new JButton("Ver Ticket");
+        btnVerTicket.setBackground(new Color(23, 162, 184));
+        btnVerTicket.setForeground(Color.WHITE);
+        JPanel panelBoton = new JPanel();
+        panelBoton.add(btnVerTicket);
+        btnVerTicket.addActionListener(e -> verTicket());
 
+        add(panelBoton, BorderLayout.SOUTH);
+        
         // Tabla de reservas
-        String[] columnas = {"Código", "Vuelo", "Fecha", "Precio", "Estado"};
+        String[] columnas = {"Código", "Vuelo", "Fecha", "Asientos", "Precio", "Estado"};
         DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -52,7 +61,7 @@ public class ReservaPanel extends JPanel {
             }
         };
         
-        JTable tablaReservas = new JTable(modeloTabla);
+        tablaReservas = new JTable(modeloTabla);
         JScrollPane scrollPane = new JScrollPane(tablaReservas);
         
         // Mostrar reservas en la tabla
@@ -64,6 +73,7 @@ public class ReservaPanel extends JPanel {
                     reserva.getCodigoReserva(),
                     reserva.getVuelo().getNumeroVuelo(),
                     sdf.format(reserva.getFechaReserva()),
+                    reserva.getCantidadAsientos(),
                     String.format("$%.2f", reserva.getPrecioTotal()),
                     reserva.getEstado()
                 };
@@ -72,7 +82,7 @@ public class ReservaPanel extends JPanel {
 
         } else {
             // Si no hay reservas
-            modeloTabla.addRow(new Object[]{"No hay reservas", "", "", "", ""});
+            modeloTabla.addRow(new Object[]{"No hay reservas", "", "", "", "", ""});
         }
         
         JPanel panelSuperior = new JPanel(new BorderLayout());
@@ -83,4 +93,34 @@ public class ReservaPanel extends JPanel {
 
         add(scrollPane, BorderLayout.CENTER);
     }
+        private void verTicket() {
+        int fila = tablaReservas.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccione una reserva");
+            return;
+        }
+
+        Reserva reserva = reservas.get(fila);
+
+        try {
+            File archivo = new File(
+                "data/tickets/ticket_" + reserva.getCodigoReserva() + ".txt"
+            );
+
+            if (!archivo.exists()) {
+                JOptionPane.showMessageDialog(this,
+                    "El ticket no existe");
+                return;
+            }
+
+            Desktop.getDesktop().open(archivo);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                "No se pudo abrir el ticket");
+        }
+    }
+
 }

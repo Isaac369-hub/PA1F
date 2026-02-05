@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Reserva {
+
     private String id;
     private Vuelo vuelo;
     private Usuario usuario;
@@ -13,11 +14,16 @@ public class Reserva {
     private String estado;
     private String clase;
     private String codigoReserva;
-    
+    private int cantidadAsientos;
+    private List<String> asientos;
+
     public Reserva() {}
-    
-    public Reserva(String id, Vuelo vuelo, Usuario usuario, List<Pasajero> pasajeros,
-                  double precioTotal, String clase) {
+
+    public Reserva(String id, Vuelo vuelo, Usuario usuario,
+                   List<Pasajero> pasajeros,
+                   double precioTotal, String clase,
+                   int cantidadAsientos, List<String> asientos) {
+
         this.id = id;
         this.vuelo = vuelo;
         this.usuario = usuario;
@@ -27,42 +33,38 @@ public class Reserva {
         this.estado = "CONFIRMADA";
         this.clase = clase;
         this.codigoReserva = "RES" + System.currentTimeMillis() % 10000;
+        this.cantidadAsientos = cantidadAsientos;
+        this.asientos = asientos;
     }
-    
-    // Getters y Setters
+
+    // GETTERS Y SETTERS
+
     public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-    
     public Vuelo getVuelo() { return vuelo; }
-    public void setVuelo(Vuelo vuelo) { this.vuelo = vuelo; }
-    
     public Usuario getUsuario() { return usuario; }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
-    
     public List<Pasajero> getPasajeros() { return pasajeros; }
-    public void setPasajeros(List<Pasajero> pasajeros) { this.pasajeros = pasajeros; }
-    
     public Date getFechaReserva() { return fechaReserva; }
-    public void setFechaReserva(Date fechaReserva) { this.fechaReserva = fechaReserva; }
-    
     public double getPrecioTotal() { return precioTotal; }
-    public void setPrecioTotal(double precioTotal) { this.precioTotal = precioTotal; }
-    
     public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
-    
     public String getClase() { return clase; }
-    public void setClase(String clase) { this.clase = clase; }
-    
     public String getCodigoReserva() { return codigoReserva; }
-    public void setCodigoReserva(String codigoReserva) { this.codigoReserva = codigoReserva; }
-    
-    public int getCantidadPasajeros() {
-        return pasajeros != null ? pasajeros.size() : 0;
+    public int getCantidadAsientos() { return cantidadAsientos; }
+    public List<String> getAsientos() { return asientos; }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
-    
+
+    public String getAsientosTexto() {
+        if (asientos == null || asientos.isEmpty()) {
+            return "No asignados";
+        }
+        return String.join(", ", asientos);
+    }
+
     @Override
     public String toString() {
-        return "Reserva " + codigoReserva + " - " + vuelo.getNumeroVuelo() + " - $" + precioTotal;
+        return "Reserva " + codigoReserva + " - " +
+               vuelo.getNumeroVuelo() + " - $" + precioTotal;
     }
 }

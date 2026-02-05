@@ -1,0 +1,10 @@
+======== TICKET DE VUELO FIS ========
+Código de reserva: RES9013
+Pasajero: Juan Pérez
+Vuelo: MEX -> ORD
+Clase: ECONOMICA
+Asientos reservados: 2
+Precio total: $440.0
+Estado: CONFIRMADA
+Fecha: 05/02/2026
+================================

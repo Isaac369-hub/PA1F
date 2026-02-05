@@ -28,10 +28,13 @@ public class ReservaController {
         }
     }
     
-    public Reserva crearReserva(Vuelo vuelo, Usuario usuario) {
+    public Reserva crearReserva(Vuelo vuelo, Usuario usuario, int cantidadAsientos) {
         try {
             List<Usuario> pasajeros = new ArrayList<>();
-            pasajeros.add(usuario); // 1 pasajero
+            
+            for (int i = 0; i < cantidadAsientos; i++) {
+            pasajeros.add(usuario);
+        } 
 
             return reservaService.crearReserva(
                 vuelo,

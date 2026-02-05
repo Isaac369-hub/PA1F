@@ -24,6 +24,8 @@ public class BusquedaVueloPanel extends JPanel {
     private JTable tablaVuelos;
     private List<Vuelo> vuelos;
 
+    private int asientosSeleccionados = 1;
+
     // constructor
     public BusquedaVueloPanel(
         VueloController vueloController,
@@ -82,6 +84,13 @@ public class BusquedaVueloPanel extends JPanel {
         btnReservar.setForeground(Color.WHITE);
         btnReservar.setFocusPainted(false);
         
+        JButton btnAsientos = new JButton("Ver / Elegir Asientos");
+        btnAsientos.setBackground(new Color(23, 162, 184));
+        btnAsientos.setForeground(Color.WHITE);
+        btnAsientos.setFocusPainted(false);
+
+        
+        
         JButton btnVolver = new JButton("Volver al inicio");
         btnVolver.setBackground(new Color(108, 117, 125)); 
         btnVolver.setForeground(Color.WHITE);
@@ -94,6 +103,7 @@ public class BusquedaVueloPanel extends JPanel {
         panelFiltros.add(btnBuscar);
         panelFiltros.add(btnReservar);
         panelFiltros.add(btnVolver);
+        panelFiltros.add(btnAsientos);
 
         add(panelFiltros, BorderLayout.SOUTH);
 
@@ -101,6 +111,8 @@ public class BusquedaVueloPanel extends JPanel {
         btnBuscar.addActionListener(e -> buscarVuelos(cmbOrigen, cmbDestino));
         btnReservar.addActionListener(e -> reservarVuelo());
         btnVolver.addActionListener(e -> mainController.mostrarDashboard());
+        btnAsientos.addActionListener(e -> elegirAsientos());
+
     }
 
     // metodos
@@ -151,7 +163,7 @@ public class BusquedaVueloPanel extends JPanel {
         }
 
         Vuelo vueloSeleccionado = vuelos.get(filaSeleccionada);
-        var reserva = reservaController.crearReserva(vueloSeleccionado, usuario);
+        var reserva = reservaController.crearReserva(vueloSeleccionado,usuario,asientosSeleccionados);
 
         if (reserva != null) {
             JOptionPane.showMessageDialog(this,
@@ -177,5 +189,41 @@ public class BusquedaVueloPanel extends JPanel {
             });
         }
     }
+    private void elegirAsientos() {
+
+    int fila = tablaVuelos.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccione un vuelo primero");
+            return;
+        }
+
+        Vuelo vuelo = vuelos.get(fila);
+
+        int disponibles = vuelo.getAsientosDisponibles();
+
+        if (disponibles == 0) {
+            JOptionPane.showMessageDialog(this,
+                "No hay asientos disponibles en este vuelo");
+            return;
+        }
+
+        JSpinner spinner = new JSpinner(new SpinnerNumberModel(1, 1, disponibles, 1));
+
+        int opcion = JOptionPane.showConfirmDialog(
+            this,
+            spinner,
+            "Asientos disponibles: " + disponibles,
+            JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (opcion == JOptionPane.OK_OPTION) {
+            asientosSeleccionados = (int) spinner.getValue();
+
+        JOptionPane.showMessageDialog(this,"Has seleccionado " + asientosSeleccionados + " asiento(s)");
+        }
+    }
+
 
 }
