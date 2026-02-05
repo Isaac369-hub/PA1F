@@ -1,0 +1,11 @@
+======== TICKET DE VUELO FIS ========
+Código de reserva: RES905
+Pasajero: Juan Pérez
+Vuelo: MEX -> ATL
+Asientos reservados: 2
+Clase: ECONOMICA
+Asientos: A149, A150
+Precio total: $480.0
+Estado: CONFIRMADA
+Fecha: 05/02/2026
+================================

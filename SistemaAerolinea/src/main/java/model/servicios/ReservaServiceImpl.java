@@ -23,7 +23,7 @@ public class ReservaServiceImpl implements IReservaService {
     
     @Override
     public Reserva crearReserva(Vuelo vuelo, Usuario usuario, 
-                               List<Usuario> pasajeros, List<String> asientos) {
+                               List<Usuario> pasajeros, List<String> asientos, String metodoPago) {
         // Convertir usuarios a pasajeros
         List<Pasajero> pasajerosList = new ArrayList<>();
         for (Usuario u : pasajeros) {
@@ -45,8 +45,9 @@ public class ReservaServiceImpl implements IReservaService {
 
         // Crear reserva
         String reservaId = "RES" + String.format("%03d", reservas.size() + 1);
-        Reserva reserva = new Reserva(reservaId, vuelo, usuario, pasajerosList,precioTotal,
-                "ECONOMICA", pasajeros.size(), asientosGenerados);
+
+        Reserva reserva = new Reserva(reservaId,vuelo,usuario,pasajerosList,precioTotal,"ECONOMICA",
+            pasajeros.size(),asientosGenerados, metodoPago);
         // Actualizar disponibilidad de asientos
         vuelo.setAsientosDisponibles(vuelo.getAsientosDisponibles() - pasajeros.size());
         

@@ -162,12 +162,42 @@ public class BusquedaVueloPanel extends JPanel {
             return;
         }
 
+        //Elegir metodo de pago
+        String[] metodosPago = {
+            "Tarjeta de crédito",
+            "Tarjeta de débito",
+            "Transferencia",
+            "Efectivo"
+        };
+
+        String metodoPago = (String) JOptionPane.showInputDialog(
+            this,
+            "Seleccione el método de pago",
+            "Pago",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            metodosPago,
+            metodosPago[0]
+        );
+
+        if (metodoPago == null) {
+            JOptionPane.showMessageDialog(this,
+                "Reserva cancelada");
+            return;
+        }
+
+    // Crear la reserva
         Vuelo vueloSeleccionado = vuelos.get(filaSeleccionada);
-        var reserva = reservaController.crearReserva(vueloSeleccionado,usuario,asientosSeleccionados);
+
+        var reserva = reservaController.crearReserva(
+            vueloSeleccionado,
+            usuario,
+            asientosSeleccionados
+        );
 
         if (reserva != null) {
-            JOptionPane.showMessageDialog(this,
-                "Reserva creada con éxito");
+            JOptionPane.showMessageDialog(this,"Reserva creada con exito\n" +"Asientos: " + asientosSeleccionados + "\n" +
+                "Pago: " + metodoPago);
         } else {
             JOptionPane.showMessageDialog(this,
                 "No se pudo crear la reserva");
@@ -223,7 +253,7 @@ public class BusquedaVueloPanel extends JPanel {
 
         JOptionPane.showMessageDialog(this,"Has seleccionado " + asientosSeleccionados + " asiento(s)");
         }
-    }
+    }   
 
 
 }

@@ -41,15 +41,19 @@ public class ReservaPanel extends JPanel {
         btnRegresar.setBackground(new Color(220, 53, 69));
         btnRegresar.setForeground(Color.WHITE);
         btnRegresar.setFocusPainted(false);
-
+        JButton btnCancelar = new JButton("Cancelar Reserva");
+        btnCancelar.setBackground(new Color(220, 53, 69));
+        btnCancelar.setForeground(Color.WHITE);
+        
         btnRegresar.addActionListener(e -> mainController.mostrarDashboard());
         JButton btnVerTicket = new JButton("Ver Ticket");
         btnVerTicket.setBackground(new Color(23, 162, 184));
         btnVerTicket.setForeground(Color.WHITE);
         JPanel panelBoton = new JPanel();
         panelBoton.add(btnVerTicket);
+        panelBoton.add(btnCancelar);
         btnVerTicket.addActionListener(e -> verTicket());
-
+        btnCancelar.addActionListener(e -> cancelarReserva());
         add(panelBoton, BorderLayout.SOUTH);
         
         // Tabla de reservas
@@ -122,5 +126,45 @@ public class ReservaPanel extends JPanel {
                 "No se pudo abrir el ticket");
         }
     }
+        private void cancelarReserva() {
 
+    int fila = tablaReservas.getSelectedRow();
+
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(this,
+            "Seleccione una reserva");
+        return;
+    }
+
+    Reserva reserva = reservas.get(fila);
+
+    if ("CANCELADA".equals(reserva.getEstado())) {
+        JOptionPane.showMessageDialog(this,
+            "La reserva ya está cancelada");
+        return;
+    }
+
+    int confirmacion = JOptionPane.showConfirmDialog(
+        this,
+        "¿Está seguro de cancelar la reserva?",
+        "Confirmar cancelación",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirmacion != JOptionPane.YES_OPTION) return;
+
+    boolean ok = controller.cancelarReserva(reserva);
+
+    if (ok) {
+        JOptionPane.showMessageDialog(this,
+            "Reserva cancelada correctamente");
+
+        // Actualizar tabla
+        tablaReservas.setValueAt("CANCELADA", fila, 5);
+
+    } else {
+        JOptionPane.showMessageDialog(this,
+            "No se pudo cancelar la reserva");
+    }
+}
 }

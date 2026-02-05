@@ -40,11 +40,21 @@ public class ReservaController {
                 vuelo,
                 usuario,
                 pasajeros,
-                new ArrayList<>()
+                new ArrayList<>(),
+                "Tarjeta"
             );
         } catch (Exception e) {
             System.err.println("Error creando reserva: " + e.getMessage());
             return null;
+        }
+    }
+    
+    public boolean cancelarReserva(Reserva reserva) {
+        try {
+            return reservaService.cancelarReserva(reserva.getId());
+        } catch (Exception e) {
+            System.err.println("Error cancelando reserva: " + e.getMessage());
+            return false;
         }
     }
     

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IReservaService {
     Reserva crearReserva(Vuelo vuelo, Usuario usuario, 
-                        List<Usuario> pasajeros, List<String> asientos);
+                        List<Usuario> pasajeros, List<String> asientos, String metodoPago);
     boolean cancelarReserva(String reservaId);
     boolean modificarReserva(String reservaId, List<String> nuevosAsientos);
     Reserva obtenerReservaPorId(String reservaId);

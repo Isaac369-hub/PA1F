@@ -1,0 +1,11 @@
+======== TICKET DE VUELO FIS ========
+Código de reserva: RES4898
+Pasajero: Juan Pérez
+Vuelo: MEX -> ORD
+Asientos reservados: 3
+Clase: ECONOMICA
+Asientos: A148, A149, A150
+Precio total: $660.0
+Estado: CONFIRMADA
+Fecha: 05/02/2026
+================================

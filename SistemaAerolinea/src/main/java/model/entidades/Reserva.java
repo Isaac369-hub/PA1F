@@ -16,13 +16,14 @@ public class Reserva {
     private String codigoReserva;
     private int cantidadAsientos;
     private List<String> asientos;
-
+    private String metodoPago;
+    
     public Reserva() {}
 
     public Reserva(String id, Vuelo vuelo, Usuario usuario,
                    List<Pasajero> pasajeros,
                    double precioTotal, String clase,
-                   int cantidadAsientos, List<String> asientos) {
+                   int cantidadAsientos, List<String> asientos, String metodoPago) {
 
         this.id = id;
         this.vuelo = vuelo;
@@ -35,6 +36,7 @@ public class Reserva {
         this.codigoReserva = "RES" + System.currentTimeMillis() % 10000;
         this.cantidadAsientos = cantidadAsientos;
         this.asientos = asientos;
+        this.metodoPago = metodoPago;
     }
 
     // GETTERS Y SETTERS
@@ -50,7 +52,8 @@ public class Reserva {
     public String getCodigoReserva() { return codigoReserva; }
     public int getCantidadAsientos() { return cantidadAsientos; }
     public List<String> getAsientos() { return asientos; }
-
+    public String getMetodoPago() {return metodoPago;}
+    public void setMetodoPago(String metodoPago) {this.metodoPago = metodoPago;}
     public void setEstado(String estado) {
         this.estado = estado;
     }
