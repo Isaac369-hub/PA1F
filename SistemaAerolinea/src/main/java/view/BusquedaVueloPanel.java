@@ -11,6 +11,8 @@ import controller.ReservaController;
 
 import model.entidades.Vuelo;
 import model.entidades.Usuario;
+import java.text.SimpleDateFormat;
+
 
 public class BusquedaVueloPanel extends JPanel {
 
@@ -35,6 +37,7 @@ public class BusquedaVueloPanel extends JPanel {
         this.reservaController = reservaController;
 
         initComponents();
+        cargarTodosLosVuelos();
     }
 
     // UI
@@ -53,7 +56,7 @@ public class BusquedaVueloPanel extends JPanel {
         add(lblTitulo, BorderLayout.NORTH);
 
         // tabla
-        String[] columnas = {"ID", "Origen", "Destino", "Precio"};
+        String[] columnas = {"ID", "Origen", "Destino", "Fecha", "Precio"};
         tablaVuelos = new JTable(new DefaultTableModel(columnas, 0));
         JScrollPane scroll = new JScrollPane(tablaVuelos);
         add(scroll, BorderLayout.CENTER);
@@ -123,14 +126,18 @@ public class BusquedaVueloPanel extends JPanel {
             return;
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
         for (Vuelo v : vuelos) {
             modelo.addRow(new Object[]{
                 v.getId(),
                 v.getOrigenIATA(),
                 v.getDestinoIATA(),
+                sdf.format(v.getFechaHoraSalida()),
                 v.getPrecioBase()
             });
         }
+
     }
 
     private void reservarVuelo() {
@@ -154,4 +161,21 @@ public class BusquedaVueloPanel extends JPanel {
                 "No se pudo crear la reserva");
         }
     }
+    private void cargarTodosLosVuelos() {
+        vuelos = vueloController.obtenerTodosLosVuelos();
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaVuelos.getModel();
+        modelo.setRowCount(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (Vuelo v : vuelos) {
+            modelo.addRow(new Object[]{
+                v.getId(),
+                v.getOrigenIATA(),
+                v.getDestinoIATA(),
+                sdf.format(v.getFechaHoraSalida()),
+                v.getPrecioBase()
+            });
+        }
+    }
+
 }

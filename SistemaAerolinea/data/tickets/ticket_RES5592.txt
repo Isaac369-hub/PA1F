@@ -1,0 +1,9 @@
+======== TICKET DE VUELO ========
+Código de reserva: RES5592
+Pasajero: Juan Pérez
+Vuelo: MEX -> BOG
+Clase: ECONOMICA
+Precio total: $280.0
+Estado: CONFIRMADA
+Fecha: 04/02/2026
+================================

@@ -1,0 +1,9 @@
+MEX,Aeropuerto Internacional Ciudad de México,Ciudad de México,México
+JFK,Aeropuerto Internacional John F. Kennedy,Nueva York,USA
+LAX,Aeropuerto Internacional Los Ángeles,Los Ángeles,USA
+ORD,Aeropuerto Internacional O'Hare,Chicago,USA
+ATL,Aeropuerto Internacional Hartsfield-Jackson,Atlanta,USA
+BOG,Aeropuerto El Dorado,Bogotá,Colombia
+LIM,Aeropuerto Jorge Chávez,Lima,Perú
+CUN,Aeropuerto Internacional de Cancún,Cancún,México
+MTY,Aeropuerto Internacional de Monterrey,Monterrey,México

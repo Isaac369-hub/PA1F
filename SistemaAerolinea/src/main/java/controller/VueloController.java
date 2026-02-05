@@ -34,4 +34,12 @@ public class VueloController {
     public List<Vuelo> buscarVuelos(String origen, String destino) {
         return buscarVuelos(origen, destino, null, 1);
     }
+    public List<Vuelo> obtenerTodosLosVuelos() {
+        try {
+            return vueloService.buscarVuelosDisponibles("", "", null, 1);
+        } catch (Exception e) {
+            System.err.println("Error obteniendo todos los vuelos: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
 }
